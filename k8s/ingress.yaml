@@ -11,10 +11,10 @@ spec:
   ingressClassName: traefik
   tls:
   - hosts:
-    - homelab.eurusik.com
+    - homelab.eurusik.tech
     secretName: homelab-docs-tls
   rules:
-  - host: homelab.eurusik.com
+  - host: homelab.eurusik.tech
     http:
       paths:
       - path: /
