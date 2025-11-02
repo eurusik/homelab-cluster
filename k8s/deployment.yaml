@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: homelab-docs
-        image: ghcr.io/eurusik/homelab-cluster:b90f9c5-1762119570
+        image: ghcr.io/eurusik/homelab-cluster:6466b48-1762120780
         ports:
         - containerPort: 3000
           name: http
