@@ -54,7 +54,7 @@ export default async function Image() {
               marginBottom: '20px',
             }}
           >
-            @eurusik lab
+            K3s Homelab
           </div>
 
           {/* Subtitle */}

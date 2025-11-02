@@ -1,6 +1,6 @@
 {
   "name": "Eugene Rusakov Home lab",
-  "short_name": "@eurusik lab",
+  "short_name": "K3s Homelab",
   "description": "Raspberry Pi K3s Kubernetes Cluster Documentation",
   "start_url": "/",
   "display": "standalone",

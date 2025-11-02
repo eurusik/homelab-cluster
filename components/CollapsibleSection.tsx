@@ -34,7 +34,7 @@ export default function CollapsibleSection({
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
-        {icon}
+        <span className="flex-shrink-0">{icon}</span>
         <span className="font-semibold text-white font-mono">{title}</span>
       </button>
       {isOpen && (

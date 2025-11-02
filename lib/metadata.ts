@@ -38,7 +38,7 @@ export function generateMetadata({
       title: `${title} | Eugene Rusakov Home lab`,
       description,
       url,
-      siteName: '@eurusik lab',
+      siteName: 'K3s Homelab',
       type: 'article',
       locale: 'en_US',
     },

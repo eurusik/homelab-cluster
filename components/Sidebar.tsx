@@ -25,7 +25,7 @@ export default function Sidebar() {
   return (
     <aside className="fixed left-0 top-0 h-screen w-64 bg-[#111111] border-r border-[#2a2a2a] overflow-y-auto">
       <div className="p-6">
-        <h1 className="text-2xl font-bold mb-8 text-[#ff8c00] font-mono">@eurusik lab</h1>
+        <h1 className="text-2xl font-bold mb-8 text-[#ff8c00] font-mono">K3s Homelab</h1>
         <nav className="space-y-1">
           <div className="text-xs uppercase tracking-wider text-gray-500 mb-2 font-mono">My Homelab</div>
           {navItems.map((item, index) => (
