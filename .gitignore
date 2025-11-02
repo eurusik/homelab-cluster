@@ -41,3 +41,5 @@ next-env.d.ts
 secrets/
 images-original/
 scripts/optimize-images.cjs
+.env.local
+k8s/secret.yaml
