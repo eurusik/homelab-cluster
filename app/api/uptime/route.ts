@@ -8,8 +8,23 @@ interface UptimeRobotMonitor {
   friendly_name: string
   url: string
   status: number // 0=paused, 1=not checked, 2=up, 8=seems down, 9=down
+  interval: number // Check interval in seconds
   custom_uptime_ratio: string
+  custom_uptime_ranges: string
   average_response_time: number
+  response_times?: Array<{
+    datetime: number
+    value: number
+  }>
+  logs?: Array<{
+    type: number // 1=down, 2=up, 98=started, 99=paused
+    datetime: number
+    duration: number
+    reason?: {
+      code?: string
+      detail?: string
+    }
+  }>
 }
 
 interface UptimeRobotResponse {
@@ -44,9 +59,12 @@ export async function GET() {
       body: new URLSearchParams({
         api_key: apiKey,
         format: 'json',
-        custom_uptime_ratios: '30', // Last 30 days
+        custom_uptime_ratios: '1-7-30-60-90', // Last 1, 7, 30, 60, 90 days
         response_times: '1',
-        response_times_average: '30'
+        response_times_average: '720', // Last 30 days (720 = 24*30)
+        response_times_limit: '24', // Last 24 data points (24 hours)
+        logs: '1',
+        logs_limit: '10' // Last 10 incidents
       }),
       cache: 'no-store'
     })
@@ -72,12 +90,41 @@ export async function GET() {
         status = 'outage'
       }
 
+      // Parse uptime ranges (1-7-30-60-90 days)
+      // custom_uptime_ratio contains the values separated by dashes
+      const uptimeRanges = monitor.custom_uptime_ratio?.split('-') || []
+      
+      // Parse response time chart data (last 24 hours)
+      const responseTimeChart = (monitor.response_times || []).map(rt => ({
+        time: new Date(rt.datetime * 1000).toISOString(),
+        value: rt.value
+      }))
+      
+      // Parse incidents from logs
+      const incidents = (monitor.logs || [])
+        .filter(log => log.type === 1) // Only down events
+        .map(log => ({
+          date: new Date(log.datetime * 1000).toISOString(),
+          duration: log.duration,
+          reason: log.reason?.detail || 'Connection timeout'
+        }))
+        .slice(0, 5) // Last 5 incidents
+
       return {
         name: monitor.friendly_name,
         status,
-        uptime: `${monitor.custom_uptime_ratio}%`,
+        interval: monitor.interval,
+        uptime: {
+          day: uptimeRanges[0] || '0.000',
+          week: uptimeRanges[1] || '0.000',
+          month: uptimeRanges[2] || '0.000',
+          twoMonths: uptimeRanges[3] || '0.000',
+          threeMonths: uptimeRanges[4] || '0.000'
+        },
         responseTime: monitor.average_response_time,
-        url: monitor.url
+        responseTimeChart,
+        url: monitor.url,
+        incidents
       }
     })
 

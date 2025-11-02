@@ -9,7 +9,7 @@ const navItems = [
   { href: '/hardware', label: 'Hardware' },
   { href: '/networking', label: 'Networking' },
   { href: '/architecture', label: 'K3s Architecture' },
-  { href: '/status', label: 'System Status' },
+  { href: '/status', label: 'Uptime' },
   { 
     label: 'Guides',
     children: [
