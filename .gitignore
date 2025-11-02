@@ -39,3 +39,5 @@ next-env.d.ts
 # kubernetes
 *.kubeconfig
 secrets/
+images-original/
+scripts/optimize-images.cjs
