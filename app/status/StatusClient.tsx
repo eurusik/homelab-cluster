@@ -170,7 +170,7 @@ export default function StatusClient() {
                       {typeof service.uptime === 'string' 
                         ? service.uptime 
                         : typeof service.uptime === 'object' && service.uptime.month
-                          ? `${service.uptime.month}%`
+                          ? `${parseFloat(service.uptime.month).toFixed(2)}%`
                           : 'N/A'
                       }
                     </p>
@@ -240,13 +240,13 @@ export default function StatusClient() {
                                 >
                                   {percentage >= 50 && (
                                     <span className="text-xs font-bold text-black font-mono">
-                                      {percentage.toFixed(3)}%
+                                      {percentage.toFixed(2)}%
                                     </span>
                                   )}
                                 </div>
                                 {percentage < 50 && (
                                   <span className={`absolute right-3 top-1/2 transform -translate-y-1/2 text-xs font-bold ${textColor} font-mono`}>
-                                    {percentage.toFixed(3)}%
+                                    {percentage.toFixed(2)}%
                                   </span>
                                 )}
                               </div>
