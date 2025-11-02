@@ -6,9 +6,9 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies with optimizations and cache
+# Install ALL dependencies (needed for build)
 RUN --mount=type=cache,target=/root/.npm \
-    npm ci --only=production --ignore-scripts && \
+    npm ci --ignore-scripts && \
     npm cache clean --force
 
 # Copy source code
