@@ -3,7 +3,6 @@
 import { ReactNode } from 'react'
 
 interface CollapsibleSectionProps {
-  id: string
   title: string
   icon: ReactNode
   isOpen: boolean
@@ -12,7 +11,6 @@ interface CollapsibleSectionProps {
 }
 
 export default function CollapsibleSection({
-  id,
   title,
   icon,
   isOpen,

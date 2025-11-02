@@ -4,10 +4,9 @@ import { useState } from 'react'
 
 interface CodeBlockProps {
   code: string
-  language?: string
 }
 
-export default function CodeBlock({ code, language = 'bash' }: CodeBlockProps) {
+export default function CodeBlock({ code }: CodeBlockProps) {
   const [copied, setCopied] = useState(false)
 
   const handleCopy = async () => {

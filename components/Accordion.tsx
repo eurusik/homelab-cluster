@@ -30,7 +30,6 @@ export default function Accordion({ items }: AccordionProps) {
       {items.map((item) => (
         <CollapsibleSection
           key={item.id}
-          id={item.id}
           title={item.title}
           isOpen={openSections.includes(item.id)}
           onToggle={() => toggleSection(item.id)}
