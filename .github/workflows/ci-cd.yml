@@ -86,11 +86,14 @@ jobs:
         push: false
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
+        cache-from: |
+          type=gha,scope=build-${{ github.ref_name }}
+          type=gha,scope=build-main
+        cache-to: type=gha,mode=max,scope=build-${{ github.ref_name }}
         build-args: |
           BUILDKIT_INLINE_CACHE=1
           BUILDKIT_PROGRESS=plain
+          NODE_ENV=production
         outputs: type=docker,dest=/tmp/image.tar
 
     - name: Upload Docker image artifact
@@ -143,8 +146,12 @@ jobs:
         push: true
         tags: ${{ steps.meta-push.outputs.tags }}
         labels: ${{ steps.meta-push.outputs.labels }}
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
+        cache-from: |
+          type=gha,scope=build-${{ github.ref_name }}
+          type=gha,scope=build-main
+        cache-to: type=gha,mode=max,scope=build-${{ github.ref_name }}
+        build-args: |
+          NODE_ENV=production
 
   update-k8s-manifest:
     needs: docker-push
