@@ -135,7 +135,7 @@ export default function StatusPage() {
       <div className="mb-8">
         <h1 className="text-4xl font-bold mb-4 text-white font-mono">Uptime</h1>
         <p className="text-gray-400 font-mono">
-          Real-time availability and performance metrics
+          Real-time availability
         </p>
       </div>
 
