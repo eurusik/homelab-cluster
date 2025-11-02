@@ -14,6 +14,7 @@ const navItems = [
     children: [
       { href: '/guides/setup-raspberry-pi', label: 'Setup Raspberry Pis' },
       { href: '/guides/install-k3s', label: 'Install K3s' },
+      { href: '/guides/k3s-ha-ansible', label: 'K3s HA with Ansible' },
     ]
   },
 ]
@@ -24,7 +25,7 @@ export default function Sidebar() {
   return (
     <aside className="fixed left-0 top-0 h-screen w-64 bg-[#111111] border-r border-[#2a2a2a] overflow-y-auto">
       <div className="p-6">
-        <h1 className="text-2xl font-bold mb-8 text-[#ff8c00] font-mono">DA.LAB</h1>
+        <h1 className="text-2xl font-bold mb-8 text-[#ff8c00] font-mono">@eurusik lab</h1>
         <nav className="space-y-1">
           <div className="text-xs uppercase tracking-wider text-gray-500 mb-2 font-mono">My Homelab</div>
           {navItems.map((item, index) => (

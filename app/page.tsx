@@ -1,8 +1,24 @@
-import Image from 'next/image'
-import Link from 'next/link'
+import { generateMetadata as genMeta, generateArticleStructuredData } from '@/lib/metadata'
+import Carousel from '@/components/Carousel'
+
+export const metadata = genMeta({
+  title: 'Raspberry Pi K3s Homelab - Introduction',
+  description: 'Welcome to my Raspberry Pi homelab cluster. Learn how to build and manage a production-ready Kubernetes cluster with K3s on Raspberry Pi hardware.',
+  path: '/',
+})
 
 export default function Home() {
+  const jsonLd = generateArticleStructuredData(
+    'Raspberry Pi K3s Kubernetes Cluster Homelab',
+    'Complete guide to building a Raspberry Pi K3s Kubernetes cluster'
+  )
+
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     <div className="max-w-5xl mx-auto px-8 py-12">
       <div className="mb-4">
         <h2 className="text-sm text-[#ff8c00] font-mono mb-2">My Homelab</h2>
@@ -12,10 +28,23 @@ export default function Home() {
         </p>
       </div>
 
-      <div className="mb-12 rounded-lg overflow-hidden border border-[#2a2a2a]">
-        <div className="bg-[#1a1a1a] h-96 flex items-center justify-center">
-          <p className="text-gray-600 font-mono">[ Cluster Image Placeholder ]</p>
-        </div>
+      <div className="mb-12">
+        <Carousel 
+          images={[
+            {
+              src: '/images/homelab.webp',
+              alt: 'Complete homelab cluster setup with Raspberry Pi boards, MikroTik router, and network switch in rack mount enclosure'
+            },
+            {
+              src: '/images/rackmate.webp',
+              alt: 'RackMate T0'
+            },
+            {
+              src: '/images/rackmate-empty.webp',
+              alt: 'Empty RackMate T0'
+            }
+          ]}
+        />
       </div>
 
       <section className="mb-12">
@@ -55,5 +84,6 @@ export default function Home() {
         </div>
       </section>
     </div>
+    </>
   )
 }

@@ -6,7 +6,7 @@ interface InfoBlockProps {
 
 export default function InfoBlock({ children }: InfoBlockProps) {
   return (
-    <div className="p-6 bg-sky-500/10 border border-sky-500/30 rounded-lg">
+    <div className="p-6 bg-sky-500/10 border border-sky-500/30 rounded-lg overflow-hidden">
       <div className="flex items-start gap-3">
         <svg 
           className="w-6 h-6 text-sky-400 flex-shrink-0 mt-0.5" 
@@ -19,7 +19,7 @@ export default function InfoBlock({ children }: InfoBlockProps) {
             clipRule="evenodd" 
           />
         </svg>
-        <div className="text-sm text-sky-100 font-mono leading-relaxed">
+        <div className="text-sm text-sky-100 font-mono leading-relaxed break-words min-w-0">
           {children}
         </div>
       </div>

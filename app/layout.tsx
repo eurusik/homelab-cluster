@@ -3,8 +3,46 @@ import './globals.css'
 import Sidebar from '@/components/Sidebar'
 
 export const metadata: Metadata = {
-  title: 'My Homelab Cluster',
-  description: 'Raspberry Pi K3s Cluster Documentation',
+  metadataBase: new URL('https://homelab.eurusik.com'),
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+  },
+  title: {
+    default: 'Eugene Rusakov Home lab',
+    template: '%s | Eugene Rusakov Home lab',
+  },
+  description: 'Complete guide to building a Raspberry Pi K3s Kubernetes cluster. Step-by-step tutorials for homelab setup, networking, and container orchestration.',
+  keywords: ['kubernetes', 'k3s', 'raspberry pi', 'homelab', 'cluster', 'docker', 'devops', 'self-hosted', 'raspberry pi cluster', 'k3s tutorial'],
+  authors: [{ name: 'Eugene Rusakov' }],
+  creator: 'Eugene Rusakov',
+  publisher: 'Eugene Rusakov',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://homelab.eurusik.com',
+    title: 'Eugene Rusakov Home lab',
+    description: 'Complete guide to building a Raspberry Pi K3s Kubernetes cluster',
+    siteName: '@eurusik lab',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Eugene Rusakov Home lab',
+    description: 'Complete guide to building a Raspberry Pi K3s Kubernetes cluster',
+    creator: '@eurusik',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 }
 
 export default function RootLayout({
@@ -14,6 +52,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#ff8c00" />
+      </head>
       <body className="bg-[#0a0a0a] text-gray-200">
         <div className="flex min-h-screen">
           <Sidebar />

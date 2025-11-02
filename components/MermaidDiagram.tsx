@@ -3,11 +3,11 @@
 import { useEffect, useRef, useState } from 'react'
 import mermaid from 'mermaid'
 
-interface NetworkDiagramProps {
+interface MermaidDiagramProps {
   chart: string
 }
 
-export default function NetworkDiagram({ chart }: NetworkDiagramProps) {
+export default function MermaidDiagram({ chart }: MermaidDiagramProps) {
   const chartRef = useRef<HTMLDivElement>(null)
   const [svg, setSvg] = useState<string>('')
 
