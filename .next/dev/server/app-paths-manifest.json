@@ -1,9 +1,0 @@
-{
-  "/architecture/page": "app/architecture/page.js",
-  "/guides/install-k3s/page": "app/guides/install-k3s/page.js",
-  "/guides/setup-raspberry-pi/page": "app/guides/setup-raspberry-pi/page.js",
-  "/hardware/page": "app/hardware/page.js",
-  "/motivation/page": "app/motivation/page.js",
-  "/networking/page": "app/networking/page.js",
-  "/page": "app/page.js"
-}

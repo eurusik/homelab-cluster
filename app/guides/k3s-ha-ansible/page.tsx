@@ -1,4 +1,4 @@
-import { generateMetadata as genMeta, generateHowToStructuredData } from '@/lib/metadata'
+import { generateMetadata as genMeta } from '@/lib/metadata'
 import PageLayout from '@/layouts/PageLayout'
 import InfoBlock from '@/components/InfoBlock'
 import TipBlock from '@/components/TipBlock'
