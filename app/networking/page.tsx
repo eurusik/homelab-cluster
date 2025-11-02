@@ -2,9 +2,11 @@ import IpTable from '@/components/IpTable'
 import PageNavigation from '@/components/PageNavigation'
 import TableOfContents from '@/components/TableOfContents'
 import TipBlock from '@/components/TipBlock'
+import NetworkDiagram from '@/components/NetworkDiagram'
 
 export default function NetworkingPage() {
   const tocSections = [
+    { id: 'network-topology', label: 'Network Topology' },
     { id: 'static-ip', label: 'Static IP Assignment' },
   ]
 
@@ -27,6 +29,35 @@ export default function NetworkingPage() {
         <p className="text-xl text-gray-400 mb-12 font-mono">
           Setup for consistent behaviour while being portable.
         </p>
+
+        <section id="network-topology" className="mb-16">
+          <h2 className="text-3xl font-semibold mb-6 text-white font-mono">Network Topology</h2>
+          <p className="text-gray-400 mb-6 font-mono">
+            My homelab network is built for portability and consistency. The TP-Link Deco M4 mesh system provides connectivity wherever I am, with the MikroTik switch connecting all Raspberry Pi nodes:
+          </p>
+
+          <NetworkDiagram chart={`
+graph TB
+    Router["TP-Link Deco M4<br/>192.168.8.1"]:::router
+    Switch["MikroTik CSS610<br/>192.168.8.2"]:::switch
+    
+    RPi5_1["RpiMaster<br/>Raspberry Pi 5 8GB<br/>192.168.8.5"]:::node
+    RPi5_2["RpiNode #1<br/>Raspberry Pi 5 8GB<br/>192.168.8.6"]:::node
+    RPi4["RpiNode #2<br/>Raspberry Pi 4 4GB<br/>192.168.8.7"]:::node
+    RPi_Future["RpiNode #3<br/>(soon)<br/>192.168.8.8"]:::nodeFuture
+    
+    Router --> Switch
+    Switch --> RPi5_1
+    Switch --> RPi5_2
+    Switch --> RPi4
+    Switch -.-> RPi_Future
+    
+    classDef router fill:#4a4a4a,stroke:#ff8c00,stroke-width:2px,color:#e0e0e0
+    classDef switch fill:#1a5f7a,stroke:#4a9eff,stroke-width:2px,color:#e0e0e0
+    classDef node fill:#7a1a1a,stroke:#ff4a4a,stroke-width:2px,color:#e0e0e0
+    classDef nodeFuture fill:#2a2a2a,stroke:#ff4a4a,stroke-width:2px,stroke-dasharray: 5 5,color:#808080
+          `} />
+        </section>
 
         <section id="static-ip">
           <h2 className="text-3xl font-semibold mb-6 text-white font-mono">Static IP Assignment</h2>
