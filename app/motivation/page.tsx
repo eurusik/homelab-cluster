@@ -1,6 +1,5 @@
 import { generateMetadata as genMeta } from '@/lib/metadata'
 import PageLayout from '@/layouts/PageLayout'
-import TipBlock from '@/components/TipBlock'
 import Image from 'next/image'
 
 export const metadata = genMeta({
