@@ -1,6 +1,8 @@
 import { generateMetadata as genMeta } from '@/lib/metadata'
+
 import PageLayout from '@/layouts/PageLayout'
 import MermaidDiagram from '@/components/MermaidDiagram'
+import Table from '@/components/Table'
 
 export const metadata = genMeta({
   title: 'K3s Cluster Architecture & Components',
@@ -100,44 +102,41 @@ graph LR
 
         <section id="resource-allocation" className="mb-16">
           <h2 className="text-3xl font-semibold mb-6 text-white font-mono">Resource Allocation</h2>
-          <div className="border border-[#2a2a2a] rounded-lg overflow-hidden">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-[#2a2a2a]">
-                  <th className="text-left px-6 py-4 font-mono text-sm text-gray-400 font-semibold">Node</th>
-                  <th className="text-left px-6 py-4 font-mono text-sm text-gray-400 font-semibold">CPU</th>
-                  <th className="text-left px-6 py-4 font-mono text-sm text-gray-400 font-semibold">Memory</th>
-                  <th className="text-left px-6 py-4 font-mono text-sm text-gray-400 font-semibold">Available for Pods</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-b border-[#2a2a2a] hover:bg-[#1a1a1a] transition">
-                  <td className="px-6 py-4 font-mono text-sm text-gray-300">RpiMaster</td>
-                  <td className="px-6 py-4 font-mono text-sm text-gray-300">4 cores</td>
-                  <td className="px-6 py-4 font-mono text-sm text-gray-300">8 GB</td>
-                  <td className="px-6 py-4 font-mono text-sm text-white font-semibold">~6 GB</td>
-                </tr>
-                <tr className="border-b border-[#2a2a2a] hover:bg-[#1a1a1a] transition">
-                  <td className="px-6 py-4 font-mono text-sm text-gray-300">RpiWorker #1</td>
-                  <td className="px-6 py-4 font-mono text-sm text-gray-300">4 cores</td>
-                  <td className="px-6 py-4 font-mono text-sm text-gray-300">4 GB</td>
-                  <td className="px-6 py-4 font-mono text-sm text-white font-semibold">~3 GB</td>
-                </tr>
-                <tr className="hover:bg-[#1a1a1a] transition">
-                  <td className="px-6 py-4 font-mono text-sm text-gray-300">RpiWorker #2</td>
-                  <td className="px-6 py-4 font-mono text-sm text-gray-300">4 cores</td>
-                  <td className="px-6 py-4 font-mono text-sm text-gray-300">8 GB</td>
-                  <td className="px-6 py-4 font-mono text-sm text-white font-semibold">~7 GB</td>
-                </tr>
-                <tr className="bg-[#1a1a1a]">
-                  <td className="px-6 py-4 font-mono text-sm text-[#ff8c00] font-bold">Total</td>
-                  <td className="px-6 py-4 font-mono text-sm text-[#ff8c00] font-bold">12 cores</td>
-                  <td className="px-6 py-4 font-mono text-sm text-[#ff8c00] font-bold">20 GB</td>
-                  <td className="px-6 py-4 font-mono text-sm text-[#ff8c00] font-bold">~16 GB</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <Table
+            columns={[
+              { key: 'node', label: 'Node' },
+              { key: 'cpu', label: 'CPU' },
+              { key: 'memory', label: 'Memory' },
+              { key: 'available', label: 'Available for Pods' },
+            ]}
+            rows={[
+              {
+                node: <span className="text-gray-300">RpiMaster</span>,
+                cpu: <span className="text-gray-300">4 cores</span>,
+                memory: <span className="text-gray-300">8 GB</span>,
+                available: <span className="text-white font-semibold">~6 GB</span>,
+              },
+              {
+                node: <span className="text-gray-300">RpiWorker #1</span>,
+                cpu: <span className="text-gray-300">4 cores</span>,
+                memory: <span className="text-gray-300">4 GB</span>,
+                available: <span className="text-white font-semibold">~3 GB</span>,
+              },
+              {
+                node: <span className="text-gray-300">RpiWorker #2</span>,
+                cpu: <span className="text-gray-300">4 cores</span>,
+                memory: <span className="text-gray-300">8 GB</span>,
+                available: <span className="text-white font-semibold">~7 GB</span>,
+              },
+              {
+                node: <span className="text-[#ff8c00] font-bold">Total</span>,
+                cpu: <span className="text-[#ff8c00] font-bold">12 cores</span>,
+                memory: <span className="text-[#ff8c00] font-bold">20 GB</span>,
+                available: <span className="text-[#ff8c00] font-bold">~16 GB</span>,
+                className: 'bg-[#1a1a1a]',
+              },
+            ]}
+          />
         </section>
       </div>
     </PageLayout>

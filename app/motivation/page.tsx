@@ -46,7 +46,7 @@ export default function MotivationPage() {
             From a loud Dell PowerEdge in a 19" rack to a silent, compact Raspberry Pi cluster.
           </p>
           
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Before - Old Homelab */}
             <div>
               <div className="relative w-full rounded-lg overflow-hidden border border-gray-600 shadow-lg mb-4">
@@ -59,8 +59,8 @@ export default function MotivationPage() {
                 />
               </div>
               <div className="text-center">
-                <h3 className="text-xl font-semibold text-red-400 mb-2 font-mono">❌ Before</h3>
-                <ul className="text-sm text-gray-400 font-mono space-y-1 text-left">
+                <h3 className="text-lg sm:text-xl font-semibold text-red-400 mb-2 font-mono">❌ Before</h3>
+                <ul className="text-xs sm:text-sm text-gray-400 font-mono space-y-1 text-left">
                   <li>• Loud server fans</li>
                   <li>• High power consumption</li>
                   <li>• Large 19" rack footprint</li>
@@ -82,8 +82,8 @@ export default function MotivationPage() {
                 />
               </div>
               <div className="text-center">
-                <h3 className="text-xl font-semibold text-green-400 mb-2 font-mono">✓ After</h3>
-                <ul className="text-sm text-gray-400 font-mono space-y-1 text-left">
+                <h3 className="text-lg sm:text-xl font-semibold text-green-400 mb-2 font-mono">✓ After</h3>
+                <ul className="text-xs sm:text-sm text-gray-400 font-mono space-y-1 text-left">
                   <li>• Silent operation</li>
                   <li>• Energy efficient (~20W)</li>
                   <li>• Compact design</li>
@@ -97,8 +97,8 @@ export default function MotivationPage() {
         {/* Philosophy */}
         <section id="philosophy" className="mt-16">
           <h2 className="text-3xl font-semibold mb-6 text-white font-mono">Philosophy</h2>
-          <div className="bg-gradient-to-r from-[#111111] to-[#0a0a0a] border border-[#ff8c00] rounded-lg p-8">
-            <p className="text-gray-300 font-mono leading-relaxed text-lg mb-4">
+          <div className="bg-gradient-to-r from-[#111111] to-[#0a0a0a] border border-[#ff8c00] rounded-lg p-4 sm:p-6 lg:p-8">
+            <p className="text-gray-300 font-mono leading-relaxed text-base sm:text-lg mb-4">
               Ultimately, this project is less about hardware and more about <span className="text-[#ff8c00] font-bold">mindset</span>:
             </p>
             <div className="space-y-3 text-gray-400 font-mono">

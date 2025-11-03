@@ -23,7 +23,7 @@ export default function MermaidDiagram({ chart }: MermaidDiagramProps) {
           lineColor: '#4a4a4a',
           secondaryColor: '#1a1a1a',
           tertiaryColor: '#0a0a0a',
-          fontSize: '14px',
+          fontSize: window.innerWidth < 640 ? '10px' : '14px',
           fontFamily: 'Courier New, monospace',
         },
       })
@@ -40,10 +40,10 @@ export default function MermaidDiagram({ chart }: MermaidDiagramProps) {
   }, [chart])
 
   return (
-    <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg p-6 overflow-x-auto">
+    <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg p-2 sm:p-4 lg:p-6 overflow-x-auto">
       <div 
         ref={chartRef} 
-        className="flex justify-center"
+        className="flex justify-center w-full [&>svg]:w-full [&>svg]:max-w-full [&>svg]:h-auto"
         dangerouslySetInnerHTML={{ __html: svg }}
       />
     </div>

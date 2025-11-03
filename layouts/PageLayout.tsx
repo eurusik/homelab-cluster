@@ -28,14 +28,14 @@ export default function PageLayout({
   nextPage,
 }: PageLayoutProps) {
   return (
-    <div className="flex max-w-7xl mx-auto">
+    <div className="flex max-w-7xl mx-auto overflow-hidden">
       {/* Main Content */}
-      <div className="flex-1 px-8 py-12 pr-16 max-w-3xl mx-auto">
+      <div className="flex-1 px-4 sm:px-8 py-8 sm:py-12 lg:pr-16 w-full lg:max-w-3xl lg:mx-auto overflow-x-hidden">
         <h2 className="text-sm text-[#ff8c00] font-mono mb-2">{breadcrumb}</h2>
-        <h1 className="text-5xl font-bold mb-8 text-white font-mono">{title}</h1>
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 text-white font-mono break-words">{title}</h1>
         
         {subtitle && (
-          <p className="text-xl text-gray-400 mb-12 font-mono">
+          <p className="text-base sm:text-lg lg:text-xl text-gray-400 mb-8 sm:mb-12 font-mono">
             {subtitle}
           </p>
         )}
@@ -52,7 +52,9 @@ export default function PageLayout({
 
       {/* Right Sidebar - On this page */}
       {tocSections && tocSections.length > 0 && (
-        <TableOfContents sections={tocSections} />
+        <div className="hidden lg:block">
+          <TableOfContents sections={tocSections} />
+        </div>
       )}
     </div>
   )

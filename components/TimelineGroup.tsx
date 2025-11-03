@@ -14,7 +14,6 @@ export default function TimelineGroup({ children }: TimelineGroupProps) {
   
   useEffect(() => {
     if (containerRef.current && stepCount > 1) {
-      // Find all step badges
       const badges = containerRef.current.querySelectorAll('.timeline-step-container')
       if (badges.length > 1) {
         const lastBadge = badges[badges.length - 1] as HTMLElement
@@ -27,17 +26,17 @@ export default function TimelineGroup({ children }: TimelineGroupProps) {
   }, [stepCount, children])
   
   return (
-    <div className="relative" ref={containerRef}>
+    <div className="relative w-full" ref={containerRef}>
       {/* Vertical line that goes exactly to the last badge */}
       {stepCount > 1 && lineHeight !== '0px' && (
         <div 
-          className="absolute left-4 top-0 w-0.5 bg-[#2a2a2a]"
+          className="absolute left-3.5 sm:left-4 top-0 w-0.5 bg-[#2a2a2a]"
           style={{ height: lineHeight }}
         />
       )}
       
       {/* Steps content */}
-      <div className="relative">
+      <div className="relative w-full">
         {children}
       </div>
     </div>
