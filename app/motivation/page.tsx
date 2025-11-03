@@ -1,73 +1,121 @@
 import { generateMetadata as genMeta } from '@/lib/metadata'
 import PageLayout from '@/layouts/PageLayout'
-import InfoBlock from '@/components/InfoBlock'
 import TipBlock from '@/components/TipBlock'
+import Image from 'next/image'
 
 export const metadata = genMeta({
-  title: 'Why Build a K3s Homelab Cluster',
-  description: 'Why I built a Raspberry Pi K3s cluster. Learn about the motivation, key premises, and purpose behind this homelab project.',
+  title: 'Motivation — Why Build This Cluster',
+  description: 'From a noisy tower server to a quiet, scalable DevOps lab. A hands-on journey toward mastering Kubernetes, GitOps, and modern cloud-native infrastructure.',
   path: '/motivation',
-  keywords: ['homelab motivation', 'why kubernetes', 'devops learning', 'raspberry pi cluster benefits'],
+  keywords: ['homelab motivation', 'devops lab', 'raspberry pi cluster', 'kubernetes learning', 'infrastructure as code'],
 })
 
 export default function MotivationPage() {
   const tocSections = [
-    { id: 'key-premisses', label: 'Key Premisses' },
-    { id: 'purpose', label: 'Purpose' },
+    { id: 'journey', label: 'The Journey' },
+    { id: 'before-after', label: 'Before & After' },
+    { id: 'philosophy', label: 'Philosophy' },
   ]
 
   return (
     <PageLayout
       title="Motivation"
-      subtitle="Why I built this and what I learned from my previous setup."
+      subtitle="From a noisy tower to a quiet, scalable DevOps lab"
       tocSections={tocSections}
       prevPage={{ href: '/', label: 'INTRODUCTION' }}
       nextPage={{ href: '/hardware', label: 'HARDWARE' }}
     >
-      <div className="space-y-12">
-        <section id="key-premisses">
-          <h2 className="text-3xl font-semibold mb-6 text-white font-mono">Key Premisses</h2>
-          <p className="text-gray-400 mb-6 font-mono">
-            Here are the key premisses I established at the start of my project:
-          </p>
-
-          <ol className="space-y-6 list-decimal list-inside text-gray-300 font-mono">
-            <li className="leading-relaxed">
-              <span className="font-bold text-white">Node Amount:</span> I currently have 3 nodes (2x Raspberry Pi 5 + 1x Raspberry Pi 4), planning to expand to 4 nodes for better workload distribution.
-            </li>
-            <li className="leading-relaxed">
-              <span className="font-bold text-white">Network Infrastructure:</span> Using MikroTik CSS610-8G-2S+IN switch for reliable connectivity between cluster nodes.
-            </li>
-            <li className="leading-relaxed">
-              <span className="font-bold text-white">Portability & Efficiency:</span> Switched to Raspberry Pi cluster for lower power consumption, quieter operation, and better portability.
-            </li>
-            <li className="leading-relaxed">
-              <span className="font-bold text-white">Technology Stack:</span> K3s cluster managed by Rancher, ArgoCD for GitOps, Grafana + Prometheus for monitoring and observability.
-            </li>
-            <li className="leading-relaxed">
-              <span className="font-bold text-white">Practical Learning:</span> Real production-like environment to experiment with DevOps practices and infrastructure automation.
-            </li>
-          </ol>
-
-          <div className="mt-8">
-            <InfoBlock>
-              Before this setup, I ran a traditional tower server. The transition to Raspberry Pi brings better energy efficiency, silent operation, and hands-on experience with ARM-based distributed systems.
-            </InfoBlock>
+      <div className="space-y-16">
+        {/* The Journey */}
+        <section id="journey">
+          <h2 className="text-3xl font-semibold mb-6 text-white font-mono">The Journey</h2>
+          <div className="space-y-4 text-gray-300 font-mono leading-relaxed">
+            <p>
+              For years I relied on a traditional tower server for experiments — it worked, but it was loud, power-hungry, and not exactly "portable." What I really wanted was something smaller, quieter, and more flexible — a setup that felt like a real production system but didn't take over my workspace.
+            </p>
+            <p>
+              That's how this Raspberry Pi cluster came to life: a compact and energy-efficient environment that lets me explore DevOps workflows, distributed systems, and automation hands-on.
+            </p>
           </div>
         </section>
 
-        <section id="purpose" className="mt-16">
-          <h2 className="text-3xl font-semibold mb-6 text-white font-mono">Purpose</h2>
-          <p className="text-gray-300 font-mono leading-relaxed mb-4">
-            The purpose of this build is to create a production-like playground where I can learn and experiment with Kubernetes (K3s), GitOps workflows using ArgoCD, comprehensive monitoring with Grafana and Prometheus, Docker containerization, CI/CD pipelines, and infrastructure as code.
+        {/* Before & After */}
+        <section id="before-after">
+          <h2 className="text-3xl font-semibold mb-6 text-white font-mono">Before & After</h2>
+          <p className="text-gray-400 font-mono mb-8">
+            From a loud Dell PowerEdge in a 19" rack to a silent, compact Raspberry Pi cluster.
           </p>
-          <p className="text-gray-300 font-mono leading-relaxed mb-6">
-            My previous server experience taught me the value of enterprise capabilities, but I wanted something more efficient and flexible. The Raspberry Pi cluster offers the perfect balance between cost, power consumption, and learning opportunities for cloud-native technologies.
-          </p>
+          
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Before - Old Homelab */}
+            <div>
+              <div className="relative w-full rounded-lg overflow-hidden border border-gray-600 shadow-lg mb-4">
+                <Image
+                  src="/images/old-homelab.webp"
+                  alt="Old Homelab - Dell PowerEdge Server"
+                  width={600}
+                  height={800}
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+              <div className="text-center">
+                <h3 className="text-xl font-semibold text-red-400 mb-2 font-mono">❌ Before</h3>
+                <ul className="text-sm text-gray-400 font-mono space-y-1 text-left">
+                  <li>• Loud server fans</li>
+                  <li>• High power consumption</li>
+                  <li>• Large 19" rack footprint</li>
+                  <li>• Heat generation</li>
+                </ul>
+              </div>
+            </div>
 
-          <TipBlock>
-            <span className="font-bold">Ultimately, I want a scalable environment where I can explore modern DevOps tools, experiment with distributed systems, and continuously expand my infrastructure knowledge.</span>
-          </TipBlock>
+            {/* After - New Raspberry Pi Cluster */}
+            <div>
+              <div className="relative w-full rounded-lg overflow-hidden border border-[#ff8c00] shadow-lg mb-4">
+                <Image
+                  src="/images/pi5.webp"
+                  alt="New Homelab - Raspberry Pi Cluster"
+                  width={600}
+                  height={800}
+                  className="w-full h-auto object-cover"
+                  priority
+                />
+              </div>
+              <div className="text-center">
+                <h3 className="text-xl font-semibold text-green-400 mb-2 font-mono">✓ After</h3>
+                <ul className="text-sm text-gray-400 font-mono space-y-1 text-left">
+                  <li>• Silent operation</li>
+                  <li>• Energy efficient (~20W)</li>
+                  <li>• Compact design</li>
+                  <li>• ARM architecture</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Philosophy */}
+        <section id="philosophy" className="mt-16">
+          <h2 className="text-3xl font-semibold mb-6 text-white font-mono">Philosophy</h2>
+          <div className="bg-gradient-to-r from-[#111111] to-[#0a0a0a] border border-[#ff8c00] rounded-lg p-8">
+            <p className="text-gray-300 font-mono leading-relaxed text-lg mb-4">
+              Ultimately, this project is less about hardware and more about <span className="text-[#ff8c00] font-bold">mindset</span>:
+            </p>
+            <div className="space-y-3 text-gray-400 font-mono">
+              <p className="flex items-start">
+                <span className="text-[#ff8c00] mr-3">→</span>
+                <span>Creating, observing, breaking things, fixing them</span>
+              </p>
+              <p className="flex items-start">
+                <span className="text-[#ff8c00] mr-3">→</span>
+                <span>Continuously evolving toward a deeper understanding of modern cloud-native infrastructure</span>
+              </p>
+              <p className="flex items-start">
+                <span className="text-[#ff8c00] mr-3">→</span>
+                <span>Mastering distributed systems through hands-on practice</span>
+              </p>
+            </div>
+          </div>
         </section>
       </div>
     </PageLayout>

@@ -5,6 +5,7 @@ import TipBlock from '@/components/TipBlock'
 import TimelineStep from '@/components/TimelineStep'
 import TimelineGroup from '@/components/TimelineGroup'
 import CodeBlock from '@/components/CodeBlock'
+import Image from 'next/image'
 
 export const metadata = genMeta({
   title: 'Setup Raspberry Pi for K3s Cluster',
@@ -44,6 +45,20 @@ export default function SetupRaspberryPiPage() {
             <TipBlock>
               Make sure to follow these steps for <span className="font-bold">all</span> your Raspberry Pis (RpiMaster, RpiWorker #1, RpiWorker #2).
             </TipBlock>
+          </section>
+
+          {/* Setup Image */}
+          <section className="my-12">
+            <div className="relative w-full max-w-3xl mx-auto rounded-lg overflow-hidden border border-[#ff8c00] shadow-lg">
+              <Image
+                src="/images/setup-pi.webp"
+                alt="Raspberry Pi Setup Process"
+                width={1200}
+                height={800}
+                className="w-full h-auto object-cover"
+                priority
+              />
+            </div>
           </section>
 
           {/* Prerequisites */}

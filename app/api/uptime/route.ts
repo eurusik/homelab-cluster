@@ -41,9 +41,28 @@ export async function GET() {
         error: 'UptimeRobot API key not configured',
         fallback: true,
         services: [
-          { name: 'Documentation Website', status: 'operational', uptime: 'N/A' },
-          { name: 'K3s Cluster', status: 'operational', uptime: 'N/A' },
-          { name: 'GitOps (ArgoCD)', status: 'operational', uptime: 'N/A' },
+          { 
+            name: 'homelab.eurusik.tech/', 
+            status: 'operational', 
+            uptime: {
+              day: '99.65',
+              week: '99.95',
+              month: '99.99',
+              twoMonths: '99.99',
+              threeMonths: '100.00'
+            },
+            responseTime: 0,
+            responseTimeChart: [],
+            interval: 300,
+            url: 'https://homelab.eurusik.tech',
+            incidents: [
+              {
+                date: new Date('2025-11-02T23:40:01').toISOString(),
+                duration: 300,
+                reason: 'Not Found'
+              }
+            ]
+          }
         ]
       },
       { status: 200 }
@@ -143,9 +162,28 @@ export async function GET() {
         error: 'Failed to fetch from UptimeRobot',
         fallback: true,
         services: [
-          { name: 'Documentation Website', status: 'operational', uptime: 'N/A' },
-          { name: 'K3s Cluster', status: 'operational', uptime: 'N/A' },
-          { name: 'GitOps (ArgoCD)', status: 'operational', uptime: 'N/A' },
+          { 
+            name: 'homelab.eurusik.tech/', 
+            status: 'operational', 
+            uptime: {
+              day: '99.65',
+              week: '99.95',
+              month: '99.99',
+              twoMonths: '99.99',
+              threeMonths: '100.00'
+            },
+            responseTime: 0,
+            responseTimeChart: [],
+            interval: 300,
+            url: 'https://homelab.eurusik.tech',
+            incidents: [
+              {
+                date: new Date('2025-11-02T23:40:01').toISOString(),
+                duration: 300,
+                reason: 'Not Found'
+              }
+            ]
+          }
         ]
       },
       { status: 200 }
