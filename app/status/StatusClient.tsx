@@ -81,7 +81,10 @@ export default function StatusClient({ initialServices }: StatusClientProps) {
   }
 
   useEffect(() => {
-    checkHealth()
+    if (initialServices.length === 0) {
+      checkHealth()
+    }
+    
     const interval = setInterval(checkHealth, 30000) // Every 30 seconds
     return () => clearInterval(interval)
   }, [])
