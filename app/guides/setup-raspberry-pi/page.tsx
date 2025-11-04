@@ -57,6 +57,7 @@ export default function SetupRaspberryPiPage() {
                 height={800}
                 className="w-full h-auto object-cover"
                 priority
+                quality={75}
               />
             </div>
           </section>

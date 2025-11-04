@@ -47,9 +47,7 @@ export default function Carousel({ images }: CarouselProps) {
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
                 priority={index === 0}
                 loading={index === 0 ? 'eager' : 'lazy'}
-                quality={85}
-                placeholder="blur"
-                blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYTFhMWEiLz48L3N2Zz4="
+                quality={75}
               />
             </div>
           ))}

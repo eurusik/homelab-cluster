@@ -55,6 +55,8 @@ export default function MotivationPage() {
                   width={600}
                   height={800}
                   className="w-full h-auto object-cover"
+                  loading="lazy"
+                  quality={85}
                 />
               </div>
               <div className="text-center">
@@ -78,6 +80,7 @@ export default function MotivationPage() {
                   height={800}
                   className="w-full h-auto object-cover"
                   priority
+                  quality={85}
                 />
               </div>
               <div className="text-center">
