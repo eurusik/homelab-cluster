@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import Sidebar from '@/components/Sidebar'
+import { siteConfig } from '@/lib/config'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -9,29 +10,37 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://homelab.eurusik.com'),
+  metadataBase: new URL(siteConfig.url),
   title: {
-    default: 'K3s Homelab - Eugene Rusakov',
-    template: '%s | K3s Homelab',
+    default: `${siteConfig.name} - ${siteConfig.author}`,
+    template: `%s | ${siteConfig.name}`,
   },
-  description: 'Complete guide to building a Raspberry Pi K3s Kubernetes cluster. Step-by-step tutorials for homelab setup, networking, and container orchestration.',
-  keywords: ['kubernetes', 'k3s', 'raspberry pi', 'homelab', 'cluster', 'docker', 'devops', 'self-hosted', 'raspberry pi cluster', 'k3s tutorial'],
-  authors: [{ name: 'Eugene Rusakov' }],
-  creator: 'Eugene Rusakov',
-  publisher: 'Eugene Rusakov',
+  description: `${siteConfig.description}. Step-by-step tutorials for homelab setup, networking, and container orchestration.`,
+  keywords: siteConfig.keywords,
+  authors: [{ name: siteConfig.author }],
+  creator: siteConfig.author,
+  publisher: siteConfig.author,
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://homelab.eurusik.com',
-    title: 'K3s Homelab - Eugene Rusakov',
-    description: 'Complete guide to building a Raspberry Pi K3s Kubernetes cluster',
-    siteName: 'K3s Homelab',
+    url: siteConfig.url,
+    title: `${siteConfig.name} - ${siteConfig.author}`,
+    description: siteConfig.description,
+    siteName: siteConfig.name,
+    images: [
+      {
+        url: '/opengraph-image',
+        width: siteConfig.ogImage.width,
+        height: siteConfig.ogImage.height,
+        alt: siteConfig.ogImage.alt,
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'K3s Homelab - Eugene Rusakov',
-    description: 'Complete guide to building a Raspberry Pi K3s Kubernetes cluster',
-    creator: '@eurusik',
+    title: `${siteConfig.name} - ${siteConfig.author}`,
+    description: siteConfig.description,
+    creator: siteConfig.twitter.handle,
   },
   robots: {
     index: true,

@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { siteConfig } from './config'
 
 interface PageMetadataProps {
   title: string
@@ -15,49 +16,37 @@ export function generateMetadata({
   keywords = [],
   image,
 }: PageMetadataProps): Metadata {
-  const baseUrl = 'https://homelab.eurusik.com'
-  const url = `${baseUrl}${path}`
-  const ogImage = image ? `${baseUrl}${image}` : `${baseUrl}/images/homelab.webp`
-
-  const defaultKeywords = [
-    'kubernetes',
-    'k3s',
-    'raspberry pi',
-    'homelab',
-    'cluster',
-    'docker',
-    'devops',
-    'self-hosted',
-  ]
+  const url = `${siteConfig.url}${path}`
+  const ogImage = image ? `${siteConfig.url}${image}` : `${siteConfig.url}/images/homelab.webp`
 
   return {
     title,
     description,
-    keywords: [...defaultKeywords, ...keywords],
+    keywords: [...siteConfig.keywords, ...keywords],
     alternates: {
       canonical: url,
     },
     openGraph: {
-      title: `${title} | Eugene Rusakov Home lab`,
+      title: `${title} | ${siteConfig.author} Home lab`,
       description,
       url,
-      siteName: 'K3s Homelab',
+      siteName: siteConfig.name,
       type: 'article',
       locale: 'en_US',
       images: [
         {
           url: ogImage,
-          width: 1200,
-          height: 630,
+          width: siteConfig.ogImage.width,
+          height: siteConfig.ogImage.height,
           alt: title,
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${title} | Eugene Rusakov Home lab`,
+      title: `${title} | ${siteConfig.author} Home lab`,
       description,
-      creator: '@eurusik',
+      creator: siteConfig.twitter.handle,
       images: [ogImage],
     },
   }
@@ -75,12 +64,12 @@ export function generateArticleStructuredData(
     description,
     author: {
       '@type': 'Person',
-      name: 'Eugene Rusakov',
+      name: siteConfig.author,
     },
     datePublished: new Date().toISOString(),
     publisher: {
       '@type': 'Person',
-      name: 'Eugene Rusakov',
+      name: siteConfig.author,
     },
     ...additionalProps,
   }

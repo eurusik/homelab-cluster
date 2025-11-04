@@ -1,10 +1,11 @@
 import { ImageResponse } from 'next/og'
+import { siteConfig } from '@/lib/config'
 
 export const runtime = 'edge'
-export const alt = 'Eugene Rusakov Home lab - Raspberry Pi K3s Cluster'
+export const alt = siteConfig.ogImage.alt
 export const size = {
-  width: 1200,
-  height: 630,
+  width: siteConfig.ogImage.width,
+  height: siteConfig.ogImage.height,
 }
 export const contentType = 'image/png'
 
