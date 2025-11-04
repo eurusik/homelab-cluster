@@ -5,6 +5,7 @@ export const metadata = genMeta({
   title: 'Raspberry Pi K3s Homelab - Introduction',
   description: 'Welcome to my Raspberry Pi homelab cluster. Learn how to build and manage a production-ready Kubernetes cluster with K3s on Raspberry Pi hardware.',
   path: '/',
+  image: '/images/homelab.webp',
 })
 
 export default function Home() {

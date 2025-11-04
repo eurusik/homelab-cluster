@@ -47,6 +47,7 @@ export default function Carousel({ images }: CarouselProps) {
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
                 priority={index === 0}
                 loading={index === 0 ? 'eager' : 'lazy'}
+                fetchPriority={index === 0 ? 'high' : 'auto'}
                 quality={75}
               />
             </div>
