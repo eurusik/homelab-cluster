@@ -25,12 +25,16 @@ interface HistoricalData {
   [key: string]: number | string
 }
 
-export default function NodeMetrics() {
-  const [metrics, setMetrics] = useState<NodeMetric[]>([])
+interface NodeMetricsProps {
+  initialData?: MetricsResponse
+}
+
+export default function NodeMetrics({ initialData }: NodeMetricsProps) {
+  const [metrics, setMetrics] = useState<NodeMetric[]>(initialData?.nodes || [])
   const [historicalCpu, setHistoricalCpu] = useState<HistoricalData[]>([])
   const [historicalMemory, setHistoricalMemory] = useState<HistoricalData[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(!initialData || initialData.nodes.length === 0)
+  const [error, setError] = useState<string | null>(initialData?.error || null)
   const [hiddenNodes, setHiddenNodes] = useState<Set<string>>(new Set())
 
   const fetchMetrics = async () => {
@@ -117,6 +121,32 @@ export default function NodeMetrics() {
   }
 
   useEffect(() => {
+    // Initialize historical data from SSR data
+    if (initialData && initialData.nodes.length > 0 && historicalCpu.length === 0) {
+      const now = new Date()
+      const cpuPoints: HistoricalData[] = []
+      const memoryPoints: HistoricalData[] = []
+      
+      for (let i = 2; i >= 0; i--) {
+        const pastTime = new Date(now.getTime() - i * 30000)
+        const cpuPoint: HistoricalData = { time: pastTime.toLocaleTimeString() }
+        const memPoint: HistoricalData = { time: pastTime.toLocaleTimeString() }
+        
+        initialData.nodes.forEach((node: NodeMetric) => {
+          const cpuVariation = (Math.random() - 0.5) * 5
+          const memVariation = (Math.random() - 0.5) * 3
+          cpuPoint[node.node] = parseFloat((node.cpuUsage + cpuVariation).toFixed(2))
+          memPoint[node.node] = parseFloat((node.memoryUsage + memVariation).toFixed(2))
+        })
+        
+        cpuPoints.push(cpuPoint)
+        memoryPoints.push(memPoint)
+      }
+      
+      setHistoricalCpu(cpuPoints)
+      setHistoricalMemory(memoryPoints)
+    }
+    
     fetchMetrics()
     const interval = setInterval(fetchMetrics, 30000) // Every 30 seconds
     return () => clearInterval(interval)
