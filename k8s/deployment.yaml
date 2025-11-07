@@ -24,6 +24,8 @@ spec:
         env:
         - name: NODE_ENV
           value: "production"
+        - name: PROMETHEUS_URL
+          value: "http://prometheus-service.monitoring.svc.cluster.local:9090"
         - name: UPTIMEROBOT_API_KEY
           valueFrom:
             secretKeyRef:

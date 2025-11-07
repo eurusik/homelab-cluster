@@ -106,7 +106,7 @@ export default function StatusClient({ initialServices }: StatusClientProps) {
       <div className="mb-8">
         <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-white font-mono break-words">Uptime</h1>
         <p className="text-sm sm:text-base text-gray-400 font-mono">
-          Real-time availability
+          Real-time service availability
         </p>
       </div>
 
