@@ -31,7 +31,6 @@ export default function NodeMetrics() {
   const [historicalMemory, setHistoricalMemory] = useState<HistoricalData[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [isFallback, setIsFallback] = useState(false)
 
   const fetchMetrics = async () => {
     try {
@@ -41,7 +40,6 @@ export default function NodeMetrics() {
         
         if (data.nodes && data.nodes.length > 0) {
           setMetrics(data.nodes)
-          setIsFallback(data.fallback || false)
           
           if (data.error) {
             setError(data.error)
@@ -71,7 +69,6 @@ export default function NodeMetrics() {
           })
         } else if (data.error) {
           setError(data.error)
-          setIsFallback(data.fallback || false)
         }
       }
       setLoading(false)
