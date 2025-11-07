@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 
 export const dynamic = 'force-dynamic'
-export const revalidate = 30 // Cache for 30 seconds
+export const revalidate = 10 // Cache for 10 seconds
 
 interface PrometheusMetric {
   metric: {
@@ -148,15 +148,17 @@ export async function GET() {
       }
     })
 
-    // Convert map to array
-    const nodes: NodeMetrics[] = Array.from(nodeMetricsMap.values()).map(m => ({
-      node: m.node || 'unknown',
-      cpuUsage: m.cpuUsage || 0,
-      memoryUsage: m.memoryUsage || 0,
-      memoryTotal: m.memoryTotal || 0,
-      memoryUsed: m.memoryUsed || 0,
-      timestamp: m.timestamp || Date.now()
-    }))
+    // Convert map to array and filter out empty node names
+    const nodes: NodeMetrics[] = Array.from(nodeMetricsMap.values())
+      .filter(m => m.node && m.node !== '')
+      .map(m => ({
+        node: m.node || 'unknown',
+        cpuUsage: m.cpuUsage || 0,
+        memoryUsage: m.memoryUsage || 0,
+        memoryTotal: m.memoryTotal || 0,
+        memoryUsed: m.memoryUsed || 0,
+        timestamp: m.timestamp || Date.now()
+      }))
 
     return NextResponse.json({
       nodes,
@@ -212,6 +214,11 @@ function extractNodeName(instance: string): string {
   // Extract node name from instance string (e.g., "192.168.88.5:9100" -> "192.168.88.5")
   const ip = instance.split(':')[0]
   
+  // Skip service DNS names
+  if (ip.includes('.svc.cluster.local') || ip.includes('node-exporter')) {
+    return '' // Will be filtered out
+  }
+  
   // Map IPs to friendly names based on your network configuration
   const nodeNames: Record<string, string> = {
     '192.168.88.5': 'RpiMaster',
@@ -219,5 +226,5 @@ function extractNodeName(instance: string): string {
     '192.168.88.7': 'RpiWorker2'
   }
 
-  return nodeNames[ip] || ip
+  return nodeNames[ip] || ''
 }
