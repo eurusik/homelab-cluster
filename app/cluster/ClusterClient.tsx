@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import NodeMetrics from '@/components/NodeMetrics'
 
 export default function ClusterClient() {
