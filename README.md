@@ -2,6 +2,8 @@
 
 <img width="3386" height="1762" alt="image" src="https://github.com/user-attachments/assets/665a0388-460b-4eaf-91c5-34dc6f922ed3" />
 
+**Demo:** https://homelab.eurusik.tech 
+
 
 ## Prerequisites
 
