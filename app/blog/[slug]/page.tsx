@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import PageLayout from '@/layouts/PageLayout'
 import { generateMetadata as genMeta } from '@/lib/metadata'
 import { getPost as getPostFromDb } from '@/lib/blogDb'
@@ -57,7 +58,17 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   return (
     <PageLayout breadcrumb="Blog" title={post.title} subtitle={new Date(post.date).toLocaleDateString('en-US', { timeZone: 'UTC' })}>
       {post.image && (
-        <img src={post.image} alt={post.title} className="w-full max-w-2xl rounded mb-6 border border-[#2a2a2a]" />
+        <div className="relative w-full max-w-2xl h-auto mb-6">
+          <Image
+            src={post.image}
+            alt={post.title}
+            width={800}
+            height={450}
+            quality={85}
+            priority
+            className="rounded border border-[#2a2a2a] w-full h-auto"
+          />
+        </div>
       )}
       <article className="prose prose-invert max-w-none">
         <p className="text-gray-300 font-mono leading-relaxed whitespace-pre-wrap">{post.content}</p>
@@ -70,7 +81,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {post.images.map((imgUrl: string, idx: number) => (
               <div key={idx} className="border border-[#2a2a2a] rounded-lg overflow-hidden bg-[#0a0a0a]">
-                <img src={imgUrl} alt={`${post.title} - Image ${idx + 1}`} className="w-full h-48 object-cover hover:opacity-90 transition-opacity" />
+                <Image
+                  src={imgUrl}
+                  alt={`${post.title} - Image ${idx + 1}`}
+                  width={400}
+                  height={300}
+                  quality={85}
+                  loading="lazy"
+                  className="w-full h-48 object-cover hover:opacity-90 transition-opacity"
+                />
               </div>
             ))}
           </div>

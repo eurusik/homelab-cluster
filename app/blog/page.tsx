@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import PageLayout from '@/layouts/PageLayout'
 import { generateMetadata } from '@/lib/metadata'
 import { listPosts } from '@/lib/blogDb'
@@ -56,11 +57,27 @@ export default async function BlogPage() {
           <a
             key={post.slug}
             href={`/blog/${post.slug}`}
-            className="block border border-[#2a2a2a] bg-[#111111] rounded-lg p-6 hover:border-[#ff8c00] transition-colors"
+            className="block border border-[#2a2a2a] bg-[#111111] rounded-lg overflow-hidden hover:border-[#ff8c00] transition-colors"
           >
-            <h3 className="text-xl font-semibold text-white font-mono mb-2">{post.title}</h3>
-            <p className="text-xs text-gray-500 font-mono mb-3">{new Date(post.date).toLocaleDateString('en-US', { timeZone: 'UTC' })}</p>
-            {post.excerpt && <p className="text-gray-400 font-mono">{post.excerpt}</p>}
+            <div className="flex flex-col md:flex-row gap-4 h-full">
+              {post.image && (
+                <div className="relative w-full md:w-48 h-48 flex-shrink-0 bg-[#0a0a0a]">
+                  <Image
+                    src={post.image}
+                    alt={post.title}
+                    fill
+                    quality={75}
+                    loading="lazy"
+                    className="object-cover"
+                  />
+                </div>
+              )}
+              <div className="flex-1 p-6">
+                <h3 className="text-xl font-semibold text-white font-mono mb-2">{post.title}</h3>
+                <p className="text-xs text-gray-500 font-mono mb-3">{new Date(post.date).toLocaleDateString('en-US', { timeZone: 'UTC' })}</p>
+                {post.excerpt && <p className="text-gray-400 font-mono line-clamp-2">{post.excerpt}</p>}
+              </div>
+            </div>
           </a>
         ))}
       </div>
