@@ -45,7 +45,7 @@ export default function BlogGallery({ images, postTitle }: { images: string[]; p
               alt={`${postTitle} - Full image ${selectedIdx + 1}`}
               width={1200}
               height={800}
-              quality={95}
+              quality={85}
               className="w-full h-auto rounded-lg"
               priority
             />
