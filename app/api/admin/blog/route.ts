@@ -41,27 +41,35 @@ export async function POST(req: Request) {
     let imagePath: string | undefined
     const images: string[] = []
     
-    if (image) {
-      const arrayBuffer = await image.arrayBuffer()
-      const buffer = Buffer.from(arrayBuffer)
-      const safeName = `${Date.now()}-${image.name.replace(/[^a-zA-Z0-9._-]/g, '')}`
-      const full = path.join(UPLOAD_DIR, safeName)
-      await fs.writeFile(full, buffer)
-      imagePath = `/api/uploads/${safeName}`
-      images.push(imagePath)
+    if (image && image.size > 0) {
+      try {
+        const arrayBuffer = await image.arrayBuffer()
+        const buffer = Buffer.from(arrayBuffer)
+        const safeName = `${Date.now()}-${image.name.replace(/[^a-zA-Z0-9._-]/g, '')}`
+        const full = path.join(UPLOAD_DIR, safeName)
+        await fs.writeFile(full, buffer)
+        imagePath = `/api/uploads/${safeName}`
+        images.push(imagePath)
+      } catch (err) {
+        console.error('Error processing featured image:', err)
+      }
     }
     
     // Handle multiple images
-    const formImages = form.getAll('images') as File[]
+    const formImages = form.getAll('images')
     for (const img of formImages) {
-      if (img instanceof File && img.size > 0) {
-        const arrayBuffer = await img.arrayBuffer()
-        const buffer = Buffer.from(arrayBuffer)
-        const safeName = `${Date.now()}-${Math.random()}-${img.name.replace(/[^a-zA-Z0-9._-]/g, '')}`
-        const full = path.join(UPLOAD_DIR, safeName)
-        await fs.writeFile(full, buffer)
-        const imgPath = `/api/uploads/${safeName}`
-        images.push(imgPath)
+      if (img && typeof img === 'object' && 'size' in img && (img as any).size > 0) {
+        try {
+          const arrayBuffer = await (img as any).arrayBuffer()
+          const buffer = Buffer.from(arrayBuffer)
+          const safeName = `${Date.now()}-${Math.random()}-${(img as any).name.replace(/[^a-zA-Z0-9._-]/g, '')}`
+          const full = path.join(UPLOAD_DIR, safeName)
+          await fs.writeFile(full, buffer)
+          const imgPath = `/api/uploads/${safeName}`
+          images.push(imgPath)
+        } catch (err) {
+          console.error('Error processing gallery image:', err)
+        }
       }
     }
 

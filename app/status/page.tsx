@@ -35,7 +35,12 @@ interface Service {
 
 async function getUptimeData(): Promise<Service[]> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+    // In production with proper base URL, fetch from API
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+    if (!baseUrl) {
+      return []
+    }
+
     const response = await fetch(`${baseUrl}/api/uptime`, {
       next: { revalidate: 30 } // Revalidate every 30 seconds
     })
