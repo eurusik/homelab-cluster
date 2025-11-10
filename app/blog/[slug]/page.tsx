@@ -1,21 +1,28 @@
 import PageLayout from '@/layouts/PageLayout'
 import { generateMetadata as genMeta } from '@/lib/metadata'
-import { siteConfig } from '@/lib/config'
 import { getPost as getPostFromDb } from '@/lib/blogDb'
 
 async function getPost(slug: string) {
-  // In production, use API; in dev, read directly
-  if (process.env.NODE_ENV === 'production') {
+  // In dev, read directly from DB
+  // In production with proper base URL, use API
+  if (process.env.NODE_ENV === 'development' || !process.env.NEXT_PUBLIC_BASE_URL) {
     try {
-      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || siteConfig.url
-      const res = await fetch(`${baseUrl}/api/blog/${slug}`, { next: { revalidate: 10 } })
-      if (!res.ok) return null
-      return res.json()
-    } catch {
+      return await getPostFromDb(slug)
+    } catch (e) {
+      console.error('Failed to get post:', e)
       return null
     }
-  } else {
-    return await getPostFromDb(slug)
+  }
+
+  // Production: fetch from API
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+    const res = await fetch(`${baseUrl}/api/blog/${slug}`, { next: { revalidate: 10 } })
+    if (!res.ok) return null
+    return res.json()
+  } catch (e) {
+    console.error('Failed to fetch post:', e)
+    return null
   }
 }
 

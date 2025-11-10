@@ -1,6 +1,5 @@
 import PageLayout from '@/layouts/PageLayout'
 import { generateMetadata } from '@/lib/metadata'
-import { siteConfig } from '@/lib/config'
 import { listPosts } from '@/lib/blogDb'
 
 export const metadata = generateMetadata({
@@ -10,25 +9,31 @@ export const metadata = generateMetadata({
   keywords: ['blog', 'news', 'updates', 'cluster'],
 })
 
-export const revalidate = 10
+export const revalidate = 0
 
 async function getPosts() {
-  // In production with replicas, use API to avoid DB lock issues
-  // In dev, read directly from DB
-  if (process.env.NODE_ENV === 'production') {
+  // In dev, read directly from DB for faster updates
+  // In production with proper base URL, use API
+  if (process.env.NODE_ENV === 'development' || !process.env.NEXT_PUBLIC_BASE_URL) {
     try {
-      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || siteConfig.url
-      const url = `${baseUrl}/api/blog`
-      const res = await fetch(url, { next: { revalidate: 10 } })
-      if (!res.ok) return { posts: [] }
-      return res.json()
-    } catch {
+      const posts = await listPosts()
+      return { posts }
+    } catch (e) {
+      console.error('Failed to list posts:', e)
       return { posts: [] }
     }
-  } else {
-    // Dev: read directly
-    const posts = await listPosts()
-    return { posts }
+  }
+
+  // Production: fetch from API
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+    const url = `${baseUrl}/api/blog`
+    const res = await fetch(url, { next: { revalidate: 10 } })
+    if (!res.ok) return { posts: [] }
+    return res.json()
+  } catch (e) {
+    console.error('Failed to fetch posts:', e)
+    return { posts: [] }
   }
 }
 
