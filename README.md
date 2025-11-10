@@ -1,4 +1,4 @@
-# Deployment Guide
+# K3s Homelab Documentation & Blog Site
 
 ## Prerequisites
 
