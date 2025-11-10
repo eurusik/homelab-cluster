@@ -12,6 +12,7 @@ const navItems = [
   { href: '/architecture', label: 'K3s Architecture' },
   { href: '/status', label: 'Uptime' },
   { href: '/cluster', label: 'Cluster Metrics' },
+  { href: '/blog', label: 'Blog' },
   { 
     label: 'Guides',
     children: [

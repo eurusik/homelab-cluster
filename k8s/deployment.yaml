@@ -62,3 +62,9 @@ spec:
           periodSeconds: 10
           timeoutSeconds: 10
           failureThreshold: 60
+        volumeMounts:
+        - name: data
+          mountPath: /data
+      volumes:
+      - name: data
+        emptyDir: {}
