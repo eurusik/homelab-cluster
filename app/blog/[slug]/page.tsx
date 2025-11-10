@@ -2,6 +2,7 @@ import Image from 'next/image'
 import PageLayout from '@/layouts/PageLayout'
 import { generateMetadata as genMeta } from '@/lib/metadata'
 import { getPost as getPostFromDb } from '@/lib/blogDb'
+import BlogGallery from '@/components/BlogGallery'
 
 async function getPost(slug: string) {
   // In dev, read directly from DB
@@ -78,21 +79,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       {post.images && post.images.length > 0 && (
         <div className="mt-8 pt-8 border-t border-[#2a2a2a]">
           <h3 className="text-lg font-semibold text-white font-mono mb-4">Gallery</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {post.images.map((imgUrl: string, idx: number) => (
-              <div key={idx} className="border border-[#2a2a2a] rounded-lg overflow-hidden bg-[#0a0a0a]">
-                <Image
-                  src={imgUrl}
-                  alt={`${post.title} - Image ${idx + 1}`}
-                  width={400}
-                  height={300}
-                  quality={85}
-                  loading="lazy"
-                  className="w-full h-48 object-cover hover:opacity-90 transition-opacity"
-                />
-              </div>
-            ))}
-          </div>
+          <BlogGallery images={post.images} postTitle={post.title} />
         </div>
       )}
     </PageLayout>
