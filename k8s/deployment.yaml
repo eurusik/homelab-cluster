@@ -26,6 +26,16 @@ spec:
           value: "production"
         - name: PROMETHEUS_URL
           value: "http://prometheus-service.monitoring.svc.cluster.local:9090"
+        - name: ADMIN_USER
+          valueFrom:
+            secretKeyRef:
+              name: admin-credentials
+              key: ADMIN_USER
+        - name: ADMIN_PASS
+          valueFrom:
+            secretKeyRef:
+              name: admin-credentials
+              key: ADMIN_PASS
         - name: UPTIMEROBOT_API_KEY
           valueFrom:
             secretKeyRef:
@@ -67,4 +77,5 @@ spec:
           mountPath: /data
       volumes:
       - name: data
-        emptyDir: {}
+        persistentVolumeClaim:
+          claimName: homelab-blog-data

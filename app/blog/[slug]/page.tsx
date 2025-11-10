@@ -1,28 +1,41 @@
 import PageLayout from '@/layouts/PageLayout'
 import { generateMetadata as genMeta } from '@/lib/metadata'
+import { siteConfig } from '@/lib/config'
+import { getPost as getPostFromDb } from '@/lib/blogDb'
 
 async function getPost(slug: string) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || ''
-  const res = await fetch(`${baseUrl}/api/blog/${slug}`, { next: { revalidate: 10 } })
-  if (!res.ok) return null
-  return res.json()
+  // In production, use API; in dev, read directly
+  if (process.env.NODE_ENV === 'production') {
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || siteConfig.url
+      const res = await fetch(`${baseUrl}/api/blog/${slug}`, { next: { revalidate: 10 } })
+      if (!res.ok) return null
+      return res.json()
+    } catch {
+      return null
+    }
+  } else {
+    return await getPostFromDb(slug)
+  }
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const post = await getPost(params.slug)
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const post = await getPost(slug)
   const title = post ? `${post.title} — Blog` : 'Blog Post — Not Found'
   const description = post ? String(post.excerpt || post.content).slice(0, 140) : 'Blog post not found.'
 
   return genMeta({
     title,
     description,
-    path: `/blog/${params.slug}`,
+    path: `/blog/${slug}`,
     keywords: ['blog', 'news', 'updates', 'cluster'],
   })
 }
 
-export default async function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = await getPost(params.slug)
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const post = await getPost(slug)
 
   if (!post) {
     return (
@@ -35,12 +48,26 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   }
 
   return (
-    <PageLayout breadcrumb="Blog" title={post.title} subtitle={new Date(post.date).toLocaleDateString()}>
+    <PageLayout breadcrumb="Blog" title={post.title} subtitle={new Date(post.date).toLocaleDateString('en-US', { timeZone: 'UTC' })}>
       {post.image && (
         <img src={post.image} alt={post.title} className="w-full max-w-2xl rounded mb-6 border border-[#2a2a2a]" />
       )}
       <article className="prose prose-invert max-w-none">
         <p className="text-gray-300 font-mono leading-relaxed whitespace-pre-wrap">{post.content}</p>
       </article>
+      
+      {/* Gallery */}
+      {post.images && post.images.length > 0 && (
+        <div className="mt-8 pt-8 border-t border-[#2a2a2a]">
+          <h3 className="text-lg font-semibold text-white font-mono mb-4">Gallery</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {post.images.map((imgUrl: string, idx: number) => (
+              <div key={idx} className="border border-[#2a2a2a] rounded-lg overflow-hidden bg-[#0a0a0a]">
+                <img src={imgUrl} alt={`${post.title} - Image ${idx + 1}`} className="w-full h-48 object-cover hover:opacity-90 transition-opacity" />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </PageLayout>
   )}

@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server'
 import { getPost } from '@/lib/blogDb'
 
-export async function GET(_req: Request, { params }: { params: { slug: string } }) {
+export async function GET(_req: Request, { params }: { params: Promise<{ slug: string }> }) {
   try {
-    const post = await getPost(params.slug)
+    const { slug } = await params
+    const post = await getPost(slug)
     if (!post) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 })
     }

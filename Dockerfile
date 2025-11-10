@@ -31,7 +31,9 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 # Create non-root user for security
 RUN addgroup --system --gid 1001 nodejs && \
-    adduser --system --uid 1001 nextjs
+    adduser --system --uid 1001 nextjs && \
+    mkdir -p /data && \
+    chown -R nextjs:nodejs /data
 
 # Copy necessary files from builder
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public

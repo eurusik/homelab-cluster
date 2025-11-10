@@ -1,5 +1,6 @@
 import { Low } from 'lowdb'
 import { JSONFile } from 'lowdb/node'
+import path from 'path'
 
 export interface BlogPost {
   slug: string
@@ -8,13 +9,15 @@ export interface BlogPost {
   excerpt?: string
   content: string
   image?: string
+  images?: string[]
 }
 
 interface BlogDbSchema {
   posts: BlogPost[]
 }
 
-const DB_PATH = '/data/blog.db.json'
+const DATA_DIR = process.env.NODE_ENV === 'production' ? '/data' : './.data'
+const DB_PATH = path.join(DATA_DIR, 'blog.db.json')
 
 let db: Low<BlogDbSchema> | null = null
 
@@ -41,7 +44,17 @@ export async function getPost(slug: string): Promise<BlogPost | undefined> {
 export async function savePost(post: BlogPost): Promise<void> {
   const db = await getDb()
   const idx = db.data!.posts.findIndex((p: BlogPost) => p.slug === post.slug)
-  if (idx >= 0) db.data!.posts[idx] = post
-  else db.data!.posts.push(post)
+  if (idx >= 0) {
+    console.log(`Updating post: ${post.slug}`)
+    db.data!.posts[idx] = post
+  } else {
+    console.log(`Creating post: ${post.slug}`)
+    db.data!.posts.push(post)
+  }
   await db.write()
+  console.log(`Post saved: ${post.slug}`)
+}
+
+export function clearDbCache(): void {
+  db = null
 }

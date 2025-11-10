@@ -1,5 +1,7 @@
 import PageLayout from '@/layouts/PageLayout'
 import { generateMetadata } from '@/lib/metadata'
+import { siteConfig } from '@/lib/config'
+import { listPosts } from '@/lib/blogDb'
 
 export const metadata = generateMetadata({
   title: 'Blog',
@@ -11,11 +13,23 @@ export const metadata = generateMetadata({
 export const revalidate = 10
 
 async function getPosts() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || ''
-  const url = `${baseUrl}/api/blog`
-  const res = await fetch(url, { next: { revalidate: 10 } })
-  if (!res.ok) return { posts: [] }
-  return res.json()
+  // In production with replicas, use API to avoid DB lock issues
+  // In dev, read directly from DB
+  if (process.env.NODE_ENV === 'production') {
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || siteConfig.url
+      const url = `${baseUrl}/api/blog`
+      const res = await fetch(url, { next: { revalidate: 10 } })
+      if (!res.ok) return { posts: [] }
+      return res.json()
+    } catch {
+      return { posts: [] }
+    }
+  } else {
+    // Dev: read directly
+    const posts = await listPosts()
+    return { posts }
+  }
 }
 
 export default async function BlogPage() {
@@ -40,7 +54,7 @@ export default async function BlogPage() {
             className="block border border-[#2a2a2a] bg-[#111111] rounded-lg p-6 hover:border-[#ff8c00] transition-colors"
           >
             <h3 className="text-xl font-semibold text-white font-mono mb-2">{post.title}</h3>
-            <p className="text-xs text-gray-500 font-mono mb-3">{new Date(post.date).toLocaleDateString()}</p>
+            <p className="text-xs text-gray-500 font-mono mb-3">{new Date(post.date).toLocaleDateString('en-US', { timeZone: 'UTC' })}</p>
             {post.excerpt && <p className="text-gray-400 font-mono">{post.excerpt}</p>}
           </a>
         ))}
